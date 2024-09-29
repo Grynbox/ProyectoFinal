@@ -1,4 +1,6 @@
 from django.contrib.auth.models import AbstractUser
+
+
 from django.db import models
 from datetime import date 
 from enum import Enum
@@ -29,7 +31,7 @@ class UsuarioAutocar(AbstractUser):
         blank=True
     )
     def __str__(self):
-        return f"{self.id_conductor} ,{self.nombre_conductor}"   
+        return f"{self.first_name} {self.last_name} "   
     
 
 class ZonaVehiculos(Enum):
@@ -52,7 +54,7 @@ class Vehiculos(models.Model):
     )
     kilometraje = models.CharField(max_length=10)
     def __str__(self):
-        return f"{self.id_vehiculo} ,{self.numero_unidad} "  
+        return f"{self.numero_unidad} "  
 
 
 class EspecialidadMecanico(Enum):
@@ -72,7 +74,7 @@ class Mecanico(models.Model):
         choices=EspecialidadMecanico.choices()
     )
     def __str__(self):
-        return f"{self.id_mecanico} ,{self.nombre_mecanico}"   
+        return f"{self.nombre_mecanico} {self.apellido_mecanico}"   
 
 
 class Conductor(models.Model):
@@ -80,20 +82,25 @@ class Conductor(models.Model):
     nombre_conductor = models.CharField(max_length=20)
     apellido_conductor = models.CharField(max_length=20)
     def __str__(self):
-        return f"{self.id_conductor} ,{self.nombre_conductor} "  
+        return f"{self.nombre_conductor} {self.apellido_conductor} "  
 
 class ReporteEntrada(models.Model):
+    #Llave primaria
     id_reporte = models.AutoField(primary_key=True)
+
+    #Llaves Foraneas
+    conductor = models.ForeignKey('Conductor', on_delete=models.DO_NOTHING)
+    reporte_usuario = models.ForeignKey('UsuarioAutocar', on_delete=models.DO_NOTHING)
+    
+    #Campos
     fecha_entrada = models.DateField(auto_now_add=True)
     fecha_terminado = models.DateField(null=True, blank=True, default=None)
     unidad = models.ForeignKey('Vehiculos', on_delete=models.DO_NOTHING)
-    conductor = models.ForeignKey('Conductor', on_delete=models.DO_NOTHING)
-    reporte_usuario = models.ForeignKey('UsuarioAutocar', on_delete=models.DO_NOTHING)
     descripcion_incidente = models.CharField(max_length=255)
     kilometraje_nuevo = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.id_reporte
+        return str(self.id_reporte)
 
 class TipoIngreso(Enum):
     CORRECTIVO = 'Correctivo'
@@ -113,6 +120,7 @@ class ReporteReparacion(models.Model):
     )
     def __str__(self):
         return self.id_reparacion    
+
 class MecanicosAsignados(models.Model):
     reporte_reparacion = models.ForeignKey('ReporteReparacion',on_delete=models.CASCADE)
     mecanico = models.ForeignKey('Mecanico',on_delete=models.CASCADE)

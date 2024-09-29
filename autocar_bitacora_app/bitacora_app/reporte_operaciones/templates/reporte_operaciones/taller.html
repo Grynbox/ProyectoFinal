@@ -1,0 +1,26 @@
+{%extends 'reporte_operaciones/base_template.html'%}
+{%block title%}Reporte Entradas Al Taller {%endblock%}
+<body>
+    <h1>Lista de Reporte de Entradas al Taller</h1>
+    {%block contenido%}
+    {% for reporte in lista_reporte %}
+
+    <div id="incidente_div">
+        <ul>
+                <li>ID REPORTE : {{ reporte.id_reporte }}</li>
+                <li>USUARIO: {{ reporte.reporte_usuario }}</li>
+                <li>FECHA: {{ reporte.fecha_entrada }}</li>
+                <li>UNIDAD: {{ reporte.unidad }} KILOMETRAJE :{{reporte.unidad.kilometraje}} ZONA :{{reporte.unidad.zona_unidad}} </li>
+                <li>NUEVO KM : {{reporte.kilometraje_nuevo}} </li>
+                <li>CONDUCTOR: {{ reporte.conductor }}</li>
+                <li>DESCRIPCION: {{ reporte.descripcion_incidente }} </li>
+            
+        </ul>
+    </div>
+    {% empty %}
+    <li>No hay objetos disponibles.</li>
+    {% endfor %}
+    {%endblock%}
+
+</body>
+</html>

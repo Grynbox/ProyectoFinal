@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+AUTH_USER_MODEL = 'reporte_operaciones.UsuarioAutocar'  # Cambia 'tu_app' por el nombre de tu aplicación
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -116,9 +117,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/accounts/login/'  # Cambia si tienes una URL diferente
+LOGIN_REDIRECT_URL = '/reporte_operaciones/crear_reporte/'  # Cambia a la URL que quieras redirigir después de iniciar sesión
+LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirige a la página de login después de cerrar sesión

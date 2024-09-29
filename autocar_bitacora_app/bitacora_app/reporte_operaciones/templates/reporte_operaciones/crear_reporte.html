@@ -1,0 +1,11 @@
+{%extends "reporte_operaciones/base_template.html"%}
+{%block title%}Crear Nuevo Reporte {%endblock%}
+
+{%block contenido%}
+<form method="post" action="/crear_reporte/">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit",name=crear_reporte, value="crear_reporte">Crear Reporte Nuevo</button>
+
+</form>
+{%endblock%}
