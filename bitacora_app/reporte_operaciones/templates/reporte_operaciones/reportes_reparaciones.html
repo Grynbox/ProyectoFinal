@@ -1,0 +1,27 @@
+{%extends 'reporte_operaciones/base_template.html'%}
+{%block title%}Reporte Entradas Al Taller {%endblock%}
+<body>
+    <h1>Lista de Reporte de Entradas al Taller</h1>
+    {%block contenido%}
+    {% for reporte in lista_reporte %}
+    <div id="incidente_div">
+        <ul>
+                <li>ID REPORTE : {{ reporte.id_entrada.id_reporte }}</li>
+                <li>USUARIO: {{ reporte.id_entrada.reporte_usuario }}</li>
+                <li>FECHA: {{ reporte.id_entrada.fecha_entrada }}</li>
+                <li>UNIDAD: {{ reporte.id_entrada.unidad }} KILOMETRAJE :{{reporte.id_entrada.unidad.kilometraje}} ZONA :{{reporte.id_entrada.unidad.zona_unidad}} </li>
+                <li>NUEVO KM : {{reporte.id_entrada.kilometraje_nuevo}} </li>
+                <li>CONDUCTOR: {{ reporte.id_entrada.conductor }}</li>
+                <li>DESCRIPCION: {{ reporte.id_entrada.descripcion_incidente }} </li>
+                <li>STATUS: {{reporte.estatus}}</li>
+                <li>ENTRADA POR:{{reporte.tipo_entrada}} </li>
+        </ul>
+        <button onclick="location.href='{% url 'modificar_reporte' reporte.id_reparacion %}'">Modificar Reporte</button>
+    </div>
+    {% empty %}
+    <li>No hay objetos disponibles.</li>
+    {% endfor %}
+    {%endblock%}
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{%extends 'reporte_operaciones/base_template.html'%}
+{%block title%}Reporte {{reporte.id_reporte}}{%endblock%}
+<body>
+    <h1>Reporte de Entradas al Taller Número: {{reporte.id_reparacion}}</h1>
+    {%block contenido%}
+    <div id="incidente_div">
+        <ul>
+                <li>ID REPORTE : {{ reporte.id_entrada.id_reporte }}</li>
+                <li>USUARIO: {{ reporte.id_entrada.reporte_usuario }}</li>
+                <li>FECHA: {{ reporte.id_entrada.fecha_entrada }}</li>
+                <li>UNIDAD: {{ reporte.id_entrada.unidad }} KILOMETRAJE :{{reporte.id_entrada.unidad.kilometraje}} ZONA :{{reporte.id_entrada.unidad.zona_unidad}} </li>
+                <li>NUEVO KM : {{reporte.id_entrada.kilometraje_nuevo}} </li>
+                <li>CONDUCTOR: {{ reporte.id_entrada.conductor }}</li>
+                <li>DESCRIPCION: {{ reporte.id_entrada.descripcion_incidente }} </li>
+            
+        </ul>
+    </div>
+    <div>
+        <form action="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit",name=crear_reporte, value="crear_reporte">asignar</button>
+
+        </form>
+    </div>
+
+    <button onclick="location.href = '{% url 'asignar_mecanico'  reporte.id_reparacion %}'">Asignar Mecanico</button>
+    <button onclick="location.href = '/home_taller/'">Agregar Piezas Cambiadas</button>
+
+    <button onclick="location.href = '/home_taller/'">Inicio</button>
+
+    {%endblock%}
+
+</body>
+</html>

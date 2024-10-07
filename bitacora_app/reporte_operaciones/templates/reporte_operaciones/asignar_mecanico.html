@@ -1,0 +1,12 @@
+{%extends "reporte_operaciones/base_template.html"%}
+{%block title%}Asignar Mecanico {%endblock%}
+
+{%block contenido%}
+<form method="post" ">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    <button type="submit",name=asignar_mecanico, value="asignar_mecanico">Asignar</button>
+
+</form>
+{%endblock%}
