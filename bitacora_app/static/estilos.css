@@ -1,0 +1,31 @@
+.parking-space {
+    padding: 10px;
+    margin: 5px 0;
+    text-align: center;
+    font-weight: bold;
+    color: white; /* Color del texto */
+    border-radius: 5px;
+}
+
+/* Color de fondo para espacios ocupados */
+.parking-space.occupied {
+    background-color: red;
+}
+
+/* Color de fondo para espacios disponibles */
+.parking-space.available {
+    background-color: green;
+}
+.table-responsive {
+    position: relative;
+    height: 300px; /* Asegúrate de que coincida con tu max-height */
+    overflow-y: auto;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #343a40; /* Color de fondo para thead-dark */
+    color: #fff; /* Color de texto para thead-dark */
+    z-index: 1;
+}

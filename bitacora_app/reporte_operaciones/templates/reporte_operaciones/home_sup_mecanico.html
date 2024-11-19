@@ -1,0 +1,71 @@
+{%extends "reporte_operaciones/base_template.html"%}
+
+{%block title%} Home Operaciones {%endblock%}
+
+{%block navbar %}         
+<a class="nav-link active" aria-current="page" href="/home_supervisor/">Inicio</a>
+<a class="nav-link active" aria-current="page" href="/home_dashboard/">Dashboard</a>
+<a class="nav-link active" aria-current="page" href="/home_dashboard_dos/">Mecanicos</a>
+
+<a class="nav-link">Usuario: {{usuario_logueado}}</a>
+<a class="nav-link">Departamento: {{departamento_usuario}}</a>
+{%endblock%}
+
+{% block contenido %}
+<div class="contain text-center">
+    <h1>Supervisión Reportes Mecánicos</h1>
+</div>
+<div class="container">
+    <div class="m-4 d-flex justify-content-center align-items-center">
+        <table class ="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Mecánico</th>
+                    <th>Unidad</th>
+                    <th>Descripción</th>
+                    <th>Fecha Entrada</th>
+                    <th>Fecha Salida</th>
+                    <th>Estatus</th>
+                    <th>Tiempo Trabajado</th>
+                    <th>Iniciar</th>
+                    <th>Detener</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reporte in reportes %}
+                    {% for reporte_mecanico in reporte.id_reporte_mecanico.all %}
+                    <tr >
+                        <td>{{reporte_mecanico.reporte_reparacion}}</td>
+                        <td>{{reporte_mecanico.id_mecanico}}</td>
+                        <td>{{reporte_mecanico.reporte_reparacion.id_entrada.unidad}}</td>
+                        <td><textarea maxlength="30">{{reporte_mecanico.reporte_reparacion.id_entrada.descripcion_incidente }}</textarea></td>
+                        <td>{{reporte_mecanico.reporte_reparacion.id_entrada.fecha_entrada}}</td>
+                        <td>{{reporte_mecanico.reporte_reparacion.id_entrada.fechas_terminado}}</td>
+                        <td>{{reporte_mecanico.estatus}}</td>
+                        <td>{{reporte_mecanico.tiempo_acumulado}}</td>
+                        <td>
+                            <form method="POST" action="{%url 'iniciar_trabajo' reporte_mecanico.id%}">
+                                {%csrf_token%}
+                                <button class="btn btn-success btn-sm" type="submit">Iniciar</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" action="{%url 'detener_trabajo' reporte_mecanico.id%}">
+                                {%csrf_token%}
+                                <button class="btn btn-danger btn-sm" type="submit">Detener</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% empty %}
+                <tr>
+                    <td colspan="12">No hay reportes disponibles.</td>
+                </tr>        
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{%endblock%}

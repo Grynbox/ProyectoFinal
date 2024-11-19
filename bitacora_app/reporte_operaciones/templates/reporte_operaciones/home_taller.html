@@ -1,0 +1,112 @@
+{% extends 'reporte_operaciones/base_template.html' %}
+{% block title %}Reporte Entradas Al Taller {% endblock %}
+<body>
+    {%block navbar %}         
+    <a class="nav-link active" aria-current="page" href="/home_taller/">Inicio</a>
+    <a class="nav-link active" aria-current="page" href="/home_dashboard/">Dashboard</a>
+    <a class="nav-link active" aria-current="page" href="/home_dashboard_dos/">Mecánicos</a>
+    <a class="nav-link">Usuario: {{usuario_logueado}}</a>
+    <a class="nav-link">Departamento: {{departamento_usuario}}</a>
+    {%endblock%}
+    <h1>Reporte de Entradas al Taller Número: {{reporte.id_reparacion}}</h1>
+    {% block contenido %}
+    <div class="contain text-center">
+        <h1>Reportes Entrada a Taller</h1>
+    </div>
+    <div class="container">
+        <div class="m2 d-flex justify-content-center">
+            <h5>Resumen de Reportes por Estatus</h5>
+        </div>
+        
+        <div class="m2 d-flex justify-content-center btn-lg">
+            <button class="btn btn-outline-secondary" role="button">
+                <a  href="?estatus=Activo">Activos: {{ estatus_dict.Activo }}</a>
+                {% if estatus_filtro == 'Activo' %} (filtrado) {% endif %}
+            </button>
+            
+            <button class="btn btn-outline-secondary" role="button">
+                <a href="?estatus=Pendiente">Pendientes: {{ estatus_dict.Pendiente }}</a>
+                {% if estatus_filtro == 'Pendiente' %} (filtrado) {% endif %}
+            </button>
+
+            <button class="btn btn-outline-secondary" role="button">
+                <a href="?estatus=Suspendido">Suspendidos: {{ estatus_dict.Suspendido }}</a>
+                {% if estatus_filtro == 'Suspendido' %} (filtrado) {% endif %}       
+            </button>
+            <button class="btn btn-outline-secondary " role="button">
+                <a  href="?estatus=Terminado" >Terminados: {{ estatus_dict.Terminado }}</a>
+                {% if estatus_filtro == 'Terminado' %} (filtrado) {% endif %}
+            </button>
+
+            <button class="btn btn-outline-secondary " role="button">
+                    <!-- Opción para limpiar el filtro -->
+                    {% if estatus_filtro %}
+                    <a href="{% url 'reportes_reparaciones' %}">Mostrar Todos los Reportes</a>
+                    {% endif %}
+            </button>
+        </div>
+        
+
+    </div>
+    <div class="m-4 d-flex justify-content-center align-items-center" >
+        <table class ="table table-striped">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>Id Reporte</th>
+                    <th>Usuario</th>
+                    <th>Fecha Entrada</th>
+                    <th>Unidad</th>
+                    <th>Zona</th>
+                    <th>KM Anterior</th>
+                    <th>KM Nuevo</th>
+                    <th>Conductor</th>
+                    <th>Descripción</th>
+                    <th>Estatus</th>
+                    <th>Entrada Por:</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reporte in page_obj %}
+                <tr>
+                    <td>{{ reporte.id_entrada.id_reporte }}</td>
+                    <td>{{ reporte.id_entrada.reporte_usuario }}</td>
+                    <td>{{ reporte.id_entrada.fecha_entrada }}</td>
+                    <td>{{ reporte.id_entrada.unidad }}</td>
+                    <td>{{ reporte.id_entrada.unidad.zona_unidad }}</td>
+                    <td>{{ reporte.id_entrada.unidad.kilometraje }}</td>
+                    <td>{{ reporte.id_entrada.kilometraje_nuevo }}</td>
+                    <td>{{ reporte.id_entrada.conductor }}</td>
+                    <td><textarea maxlength="30">{{ reporte.id_entrada.descripcion_incidente }}</textarea></td>
+                    <td>{{ reporte.estatus }}</td>
+                    <td>{{ reporte.tipo_entrada }}</td>
+                    <!-- Botón para modificar el reporte -->
+                    <td><button class="btn btn-primary btn-sm" onclick="location.href='{% url 'modificar_reporte' reporte.id_reparacion %}'">Modificar Reporte</button></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="12">No hay reportes disponibles.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <!-- Paginación -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?{% if estatus_filtro %}estatus={{ estatus_filtro }}&{% endif %}page=1">&laquo; primera</a>
+                <a href="?{% if estatus_filtro %}estatus={{ estatus_filtro }}&{% endif %}page={{ page_obj.previous_page_number }}">anterior</a>
+            {% endif %}
+
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?{% if estatus_filtro %}estatus={{ estatus_filtro }}&{% endif %}page={{ page_obj.next_page_number }}">siguiente</a>
+                <a href="?{% if estatus_filtro %}estatus={{ estatus_filtro }}&{% endif %}page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,189 @@
+{%extends 'reporte_operaciones/base_template.html'%}
+{% load static %}
+
+{% block head %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'estilos.css' %}">
+
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+{% endblock %}
+
+{%block title%}Dashboard_uno{%endblock%}
+<body>
+    {%block navbar %}         
+        <a class="nav-link active" aria-current="page" href="/home_taller/">Inicio</a>
+        <a class="nav-link active" aria-current="page" href="/home_dashboard/">Dashboard</a>
+        <a class="nav-link active" aria-current="page" href="/home_dashboard_dos/">Mecánicos</a>
+        <a class="nav-link">Usuario: {{usuario_logueado}}</a>
+        <a class="nav-link">Departamento: {{departamento_usuario}}</a>
+    {%endblock%}
+    {%block contenido %}
+    <div class="contain text-center">
+        <h1>Mecánicos</h1>
+    </div>
+              
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h6 class="text-center">Tiempo Promedio Mécanicos-Especialidad</h6>
+                <canvas id="promedioTiempoChart"></canvas>
+            </div>
+            <div class="col">
+                <h6 class="text-center">Comparación Tiempo Trabajado Mécanicos-Especialidad</h6>
+                <canvas id="promedioTiempoMecanicoChart"></canvas>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <form method="GET" class="d-flex flex-column align-items-center">
+                            {{ form_filtro.as_p }}
+                            <button class="btn btn-primary btn-sm" type="submit" name="filtrar">Filtrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- <div class="container">
+        <div class="col">
+            <div class="row">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ mecanico_form.as_p }}
+                    <button class="btn btn-primary btn-sm" type="submit">Filtrar</button>
+                </form>
+            </div>
+            {% if tiempo_promedio %}
+                <div class="row mt-3">
+                    <p>Tiempo Promedio de Trabajo: {{ tiempo_promedio }}</p>
+                    
+                </div>
+            {% endif %}
+        </div>
+    </div> -->
+    <div class="containter">
+        <div class="text-center">
+            <h4>Reincidencias</h4>
+
+        </div>
+        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;" >
+            <table class ="table table-striped" style="margin: 30px;">
+                <thead>
+                    <tr>
+                        <th>Unidad</th>
+                        <th>Fecha Entrada</th>
+                        <th>Mecánico</th>
+                        <th>Reparaciones Seleccionadas</th>
+                        <th>Tiempo Acumulado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reporte in reportes_con_mecanico %}
+                        {% for mecanico in reporte.id_reporte_mecanico.all %}
+                            <tr>
+                                <td>{{ reporte.id_entrada.unidad.numero_unidad }}</td>
+                                <td>{{ reporte.id_entrada.fecha_entrada }}</td>
+                                <td>{{ mecanico.id_mecanico }}</td>
+                                <td>
+                                    {% with reparaciones=mecanico.reparacion_selecionada.all %}
+                                        {{ reparaciones|join:", " }}
+                                    {% endwith %}
+                                </td>
+                                <td>{{ mecanico.tiempo_acumulado }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+        </div>        
+    </div>
+
+    <script>
+
+          // Crear la instancia de `promedioTiempoChart`
+        const labelPromedioEspecialidad = {{labels|safe}};
+        const dataPromedioEspecialidad = {{data|safe}};
+
+        const promedioTiempoChart = document.getElementById('promedioTiempoChart') ;  
+        new Chart(
+            promedioTiempoChart, {
+            type: 'bar',
+            data: {
+                labels: {{labels|safe}},
+                datasets: [{
+                    label: 'Promedio de Horas Trabajadas',
+                    data: {{data|safe}},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Horas'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Especialidad'
+                        }
+                    }
+                }
+            }
+        });
+        const labelsMecacanicosPromedio = {{labels_mecanico|safe}};
+        const dataMecacanicosPromedio = {{data_mecanico|safe}};
+        // const Especialidad = {{especialidad}};
+        if(labelsMecacanicosPromedio.length > 0 && dataMecacanicosPromedio.length > 0 ){
+            // Crear la instancia de `promedioTiempoChart`
+          const promedioTiempoMecanicoChart = document.getElementById('promedioTiempoMecanicoChart') ;  
+            new Chart(
+                promedioTiempoMecanicoChart, {
+                type: 'bar',
+                data: {
+                    labels: labelsMecacanicosPromedio,
+                    datasets: [{
+                        label: 'Especialidad de Mecanicos :' ,
+                        data: dataMecacanicosPromedio,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Horas'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Mecanicos'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+    </script>
+        {%endblock%}
+
+</body>

@@ -1,13 +1,52 @@
 {%extends "reporte_operaciones/base_template.html"%}
+
 {%block title%} Home Operaciones {%endblock%}
 
+{%block navbar %}         
+<a class="nav-link active" aria-current="page" href="/home_operaciones/">Inicio</a>
+<a class="nav-link" href="/crear_reporte/">Crear Reporte</a>
+<a class="nav-link" href="/agregar_vehiculo/">Agregar Vehiculo</a>
+<a class="nav-link" href="/agregar_conductor/">Agregar Conductor</a>
+<a class="nav-link">Usuario: {{usuario_logueado}}</a>
+<a class="nav-link">Departamento: {{departamento_usuario}}</a>
+{%endblock%}
+
 {% block contenido %}
+<div class="contain text-center">
+    <h1>Reportes Creados</h1>
+</div>
+<div class="container">
+    <div class="m-4 d-flex justify-content-center align-items-center">
+        <table class ="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Conductor</th>
+                    <th>Unidad</th>
+                    <th>Descripción</th>
+                    <th>Fecha Entrada</th>
+                    <th>Fecha Salida</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reporte in reportes %}
+                <tr >
+                    <td>{{reporte.id_reporte}}</td>
+                    <td>{{reporte.conductor}}</td>
+                    <td>{{reporte.unidad}}</td>
+                    <td><textarea maxlength="30">{{ reporte.descripcion_incidente }}</textarea></td>
+                    <td>{{reporte.fecha_entrada}}</td>
+                    <td>{{reporte.fechas_terminado}}</td>
+                </tr>
 
-<button onclick="location.href = './crear_reporte/'">Nuevo reporte</button>
+                {% empty %}
+                <tr>
+                    <td colspan="12">No hay reportes disponibles.</td>
+                </tr>
+                {% endfor %}
 
-<button onclick="location.href = './agregar_conductor/'">Nuevo Conductor</button>
-
-<button onclick="location.href = './agregar_vehiculo/'">Nuevo Vehiculo</button>
-
-
+            </tbody>
+        </table>
+    </div>
+</div>
 {%endblock%}

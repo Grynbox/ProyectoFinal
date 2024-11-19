@@ -1,0 +1,125 @@
+CARROCERIA E IMAGEN,Cambiar Tapon de combustible
+CARROCERIA E IMAGEN,Reparar Tapon de combustible
+CARROCERIA E IMAGEN,Reparar Tanque de combustible
+CARROCERIA E IMAGEN,Cambio de escape 
+CARROCERIA E IMAGEN,Fijo escape 
+CARROCERIA E IMAGEN,soldadura de escape 
+CARROCERIA E IMAGEN,Fijo tapa de caja de velocidad
+CARROCERIA E IMAGEN,soldadura de Palanca de velocidad
+CARROCERIA E IMAGEN,cambio de perilla de Palanca de velocidad
+CARROCERIA E IMAGEN,cambio base de Espejos
+CARROCERIA E IMAGEN,Fijo Espejos
+CARROCERIA E IMAGEN,cambio de Espejos
+CARROCERIA E IMAGEN,Cambio de asientos
+CARROCERIA E IMAGEN,Fijo asientos
+CARROCERIA E IMAGEN,soldadura de asientos
+CARROCERIA E IMAGEN,soldadura Defensa
+CARROCERIA E IMAGEN,Pintura de Defensa
+CARROCERIA E IMAGEN,Limpieza de tuberias
+CARROCERIA E IMAGEN,soldadura de tuberias
+CRISTALES,Falta ventanilla
+CRISTALES,Rotura de ventanilla
+CRISTALES,Ventanilla safada
+DIRECCION,Se acompleto aceite hidraulico
+DIRECCION,Reviso nivel de aceite
+DIRECCION,Reparar coluumna de direccion
+DIRECCION,Engrasado pernos
+DIRECCION,Ajuste de mangueras
+DIRECCION,Engrasado suspencion
+EJE DELANTERO,Cambio de tapa de maza
+EJE DELANTERO,Correccion de fuga
+EJE DELANTERO,Ajuste de frenos
+EJE DELANTERO,Engraso crucetas
+EJE DELANTERO,Cambio de balero
+EJE DELANTERO,Cambio de reten
+EJE TRASERO,Cambio de reten
+EJE TRASERO,Cambio de buje radial
+EJE TRASERO,Eje trasero corrido
+EJE TRASERO,Cambio de tornillo
+EJE TRASERO,Ajuste de frenos
+EJE TRASERO,Montar barra cardan
+EJE TRASERO,cambio de percha 
+FRENOS,Calibracion de frenos
+FRENOS,Calibracion de balatas
+FRENOS,Cambio de balatas
+FRENOS,Sincronizacion de ABS
+FRENOS,Cambio de tambores
+FRENOS,Cambio de kit de herraje
+FRENOS,Revision general
+FRENOS,Correccion en chamber
+FRENOS,Correcion de valvulas
+ELECTRICO,Cargar baterias
+ELECTRICO,Cambio de baterias
+ELECTRICO,Correccion con alternador
+ELECTRICO,Cambio de marcha
+ELECTRICO,Correcion en timbre
+ELECTRICO,Cambio de claxon
+ELECTRICO,Correccion de luces exteriores
+ELECTRICO,Correccion de luces interiores
+ELECTRICO,Correccion en ventilador
+ELECTRICO,Cambio de ventilador
+ELECTRICO,Correccion de plafones
+ELECTRICO,Coreeccion en sensores
+ELECTRICO,Cambio de destelladores 
+ELECTRICO,Cambio de focos
+ELECTRICO,Correccion en sistema de arranque
+LLANTAS,Rescate de unidad
+LLANTAS,Calibrar llanta
+LLANTAS,Montar llanta
+LLANTAS,Llanta amarrada
+LLANTAS,Llanta ponchada
+LLANTAS,Cambio de birlos
+MOTOR,Se puso aceite hidraulico
+MOTOR,Lavado de motor
+MOTOR,Purgaron lineas de combustible
+MOTOR,Cambio de bomba de agua
+MOTOR,Se coloco anticongelante
+MOTOR,Revision de inyectores 
+MOTOR,Cambio de inyectores
+MOTOR,Cambio de manguera
+MOTOR,Revision de manguera
+MOTOR,Montar tapa de punteria 
+MOTOR,Cambio de filtro
+MOTOR,Correccion de sensor
+MOTOR,Escaneo de unidad
+MOTOR,Montar tanque
+MOTOR,Correccion de polea
+MOTOR,"Barra cardan, espiga perno, cruceta"
+NEUMATICO,Fuga de aire
+NEUMATICO,Lavado de tuberias 
+NEUMATICO,Correccion de mangueras
+NEUMATICO,Cambio de chambers
+NEUMATICO,Correccion de valvulas
+NEUMATICO,Cambio de secador
+NEUMATICO,Cambio de gato
+NEUMATICO,Correccion de serpentin
+SUSPENSION,Cambio de goma de varilla
+SUSPENSION,Cambio de goma de barra estabilizadora
+SUSPENSION,Ajuste volante de direccion
+SUSPENSION,Ajuste tornillo de amortiguador
+SUSPENSION,Cambio de amortiguador
+SUSPENSION,Cambio base de amortiguador
+SUSPENSION,Cambio de bujes
+SUSPENSION,Cambio de muelle
+SUSPENSION,Cambio de perchas
+SUSPENSION,Correccion en pernos
+SUSPENSION,Calibracion de suspension
+SUSPENSION,Calibracion varillas bolsa trasera
+SUSPENSION,Correccion valvula reguladora
+SUSPENSION,Cambio de base barra estabilizadora
+SUSPENSION,Correccion barra estabilizadora
+SUSPENSION,Ajuste de espigas
+SUSPENSION,Cambio de bolsa
+TRANSMISION,Cambio de resorte de pedal del clutch
+TRANSMISION,Cambio de clutch
+TRANSMISION,Calibracion del pedal del clutch
+TRANSMISION,Correccion en clutch
+TRANSMISION,Cambio de palanca
+TRANSMISION,Ajuste de palanca
+TRANSMISION,Perno en palanca
+TRANSMISION,Ajuste cono de palanca
+TRANSMISION,Ajuste de barra cardan
+TRANSMISION,Acompletar aceite de transmision 
+TRANSMISION,Correccion en servo
+TRANSMISION, Purgar sistema de embrague
+TRANSMISION,Correccion del dual

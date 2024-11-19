@@ -1,12 +1,28 @@
 {%extends "reporte_operaciones/base_template.html"%}
 {%block title%}Crear Nuevo Reporte {%endblock%}
+{%block navbar %}         
+<a class="nav-link active" aria-current="page" href="/home_operaciones/">Inicio</a>
+<a class="nav-link" href="/crear_reporte/">Crear Reporte</a>
+<a class="nav-link" href="/agregar_vehiculo/">Agregar Vehículo</a>
+<a class="nav-link" href="/agregar_conductor/">Agregar Conductor</a>
+<a class="nav-link">Usuario: {{usuario_logueado}}</a>
+<a class="nav-link">Departamento: {{departamento_usuario}}</a>
+{%endblock%}
 
 {%block contenido%}
-<form method="post" ">
-    {% csrf_token %}
-    {{form.as_p}}
-
-    <button type="submit",name=crear_reporte, value="crear_reporte">{{button}}</button>
-
-</form>
+<div class="contain text-center">
+    <h1>{{button}}</h1>
+</div>
+<div class="container">
+    <div class="m-4 d-flex justify-content-center align-items-center">
+        <div>
+            <form method="post" >
+                    {% csrf_token %}
+                    {{form.as_p}}                
+                <button class="btn btn-primary btn-lg" type="submit",name=crear_reporte, value="crear_reporte">{{button}}</button>
+                <button class="btn btn-primary btn-lg" onclick="location.href = '/home_operaciones/'">Inicio </button>
+            </form>
+        </div>
+    </div>
+</div>
 {%endblock%}

@@ -1,0 +1,111 @@
+{% extends 'reporte_operaciones/base_template.html' %}
+{% block title %}Reporte Entradas Al Taller {% endblock %}
+<body>
+    {%block navbar %}         
+    <a class="nav-link active" aria-current="page" href="/home_mecanico/">Inicio</a>
+    <a class="nav-link">Usuario: {{usuario_logueado}}</a>
+    <a class="nav-link">Departamento: {{departamento_usuario}}</a>
+    {%endblock%}
+    <h1>Reporte de Entradas al Taller Número: {{reporte.id_reparacion}}</h1>
+    {% block contenido %}
+    <div class="contain text-center">
+        <h1>Reporte Mecánico Descripción</h1>
+    </div>
+    </div>
+    <div class="container">
+        <div class="m-4 d-flex justify-content-center align-items-center" >
+            <table class ="table table-striped">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th>Id Reporte</th>
+                        <th>Usuario</th>
+                        <th>Fecha Entrada</th>
+                        <th>Unidad</th>
+                        <th>Zona</th>
+                        <th>KM Anterior</th>
+                        <th>KM Nuevo</th>
+                        <th>Conductor</th>
+                        <th>Descripción</th>
+                        <th>Estatus</th>
+                        <th>Entrada Por:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ reporte.id_entrada }}</td>
+                        <td>{{ reporte.id_entrada.reporte_usuario }}</td>
+                        <td>{{ reporte.id_entrada.fecha_entrada }}</td>
+                        <td>{{ reporte.id_entrada.unidad }}</td>
+                        <td>{{ reporte.id_entrada.unidad.zona_unidad }}</td>
+                        <td>{{ reporte.id_entrada.unidad.kilometraje }}</td>
+                        <td>{{ reporte.id_entrada.kilometraje_nuevo }}</td>
+                        <td>{{ reporte.id_entrada.conductor }}</td>
+                        <td><textarea maxlength="30">{{ reporte.id_entrada.descripcion_incidente }}</textarea></td>
+                        <td>{{ reporte.estatus }}</td>
+                        <td>{{ reporte.tipo_entrada }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-4">        
+                <form method="POST">
+                    {% csrf_token %}                    
+                        <div class="form-group">
+                            <label for="id_tipo_reparacion">Área de Reparación:</label>
+                            {{ form.tipo_reparacion }}
+                        </div>
+                        <!-- Aquí se cargarán las opciones de reparación dinámicamente -->
+                        <div id="reparacion-container" class="form-group mt-3">
+                            <label>Reparación:</label>
+                            <div class="row" id="id_reparacion"></div>
+                        </div>
+                        <button class="btn btn-primary btn-lg" type="submit" value="crear_reporte">Guardar</button>    
+                </form>
+            </div>
+            <div class="col mt-5">
+                <h5>Reparaciones Realizadas</h5>
+                {% for reporte_mecanico in reparaciones %}
+                    <h6>Reporte del Mecánico: {{ reporte_mecanico.id_mecanico }}</h6>
+                    <ul>
+                        {% for reparacion in reporte_mecanico.reparacion_selecionada.all %}
+                            <li>{{ reparacion.reparacion }}</li>
+                        {% endfor %}
+                    </ul>
+                {% empty %}
+                    <p>No se han registrado reparaciones para este reporte.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_tipo_reparacion').change(function () {
+                var tipoReparacionID = $(this).val();
+                $.ajax({
+                    url: "{% url 'cargar_reparaciones' %}",
+                    data: {
+                        'tipo_reparacion': tipoReparacionID
+                    },
+                    success: function (data) {
+                        let reparacionField = $('#id_reparacion');
+                        reparacionField.empty();
+                        $.each(data, function (index, reparacion) {
+                            reparacionField.append(
+                                $('<label class="form-check-label">').text(reparacion.nombre)
+                                    .prepend($('<input type="checkbox" class="form-check-input">')
+                                    .attr('value', reparacion.id).attr('name', 'reparacion'))
+                            );
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+        
+    {%endblock%}
+
+</body>

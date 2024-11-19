@@ -61,6 +61,8 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                #Contexto para nombre usuario y departamentos
+                'reporte_operaciones.context_processors.user_info',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],

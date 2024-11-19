@@ -1,23 +1,46 @@
 {%extends 'reporte_operaciones/base_template.html'%}
 {%block title%}Reporte {{reporte.id_reporte}}{%endblock%}
 <body>
+    {%block navbar %}         
+    <a class="nav-link active" aria-current="page" href="/home_operaciones/">Inicio</a>
+    <a class="nav-link" href="/crear_reporte/">Crear Reporte</a>
+    <a class="nav-link" href="/agregar_vehiculo/">Agregar Vehiculo</a>
+    <a class="nav-link" href="/agregar_conductor/">Agregar Conductor</a>
+    <a class="nav-link">Usuario: {{usuario_logueado}}</a>
+    <a class="nav-link">Departamento: {{departamento_usuario}}</a>
+    {%endblock%}
     <h1>Reporte de Entradas al Taller Número: {{reporte.id_reporte}}</h1>
     {%block contenido%}
-    <div id="incidente_div">
-        <ul>
-                <li>ID REPORTE : {{ reporte.id_reporte }}</li>
-                <li>USUARIO: {{ reporte.reporte_usuario }}</li>
-                <li>FECHA: {{ reporte.fecha_entrada }}</li>
-                <li>UNIDAD: {{ reporte.unidad }} KILOMETRAJE :{{reporte.unidad.kilometraje}} ZONA :{{reporte.unidad.zona_unidad}} </li>
-                <li>NUEVO KM : {{reporte.kilometraje_nuevo}} </li>
-                <li>CONDUCTOR: {{ reporte.conductor }}</li>
-                <li>DESCRIPCION: {{ reporte.descripcion_incidente }} </li>
-            
-        </ul>
+    <div class="contain text-center">
+        <h1>Reporte Creado</h1>
     </div>
+    <div class="m-4 d-flex justify-content-center align-items-center" >
+        <table class ="table table-striped">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>Id Reporte</th>
+                    <th>Fecha Entrada</th>
+                    <th>Unidad</th>
+                    <th>Zona</th>
+                    <th>KM Anterior</th>
+                    <th>KM Nuevo</th>
+                    <th>Descripción</th>
 
-    <button onclick="location.href = '/home_operaciones/'">Inicio</button>
-
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ reporte.id_reporte }}</td>
+                    <td>{{ reporte.fecha_entrada }}</td>
+                    <td>{{ reporte.unidad }}</td>
+                    <td>{{ reporteunidad.unidad.zona_unidad }}</td>
+                    <td>{{ reporte.unidad.kilometraje }}</td>
+                    <td>{{ reporte.kilometraje_nuevo }}</td>
+                    <td><textarea maxlength="30">{{ reporte.descripcion_incidente }}</textarea></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     {%endblock%}
 
 </body>

@@ -1,0 +1,54 @@
+{% extends 'reporte_operaciones/base_template.html' %}
+{% block title %}Descripción de Reparación{% endblock %}
+<body>
+    {%block navbar %}         
+        <a class="nav-link active" aria-current="page" href="/home_mecanico/">Inicio</a>
+        <a class="nav-link">Usuario: {{usuario_logueado}}</a>
+        <a class="nav-link">Departamento: {{departamento_usuario}}</a>
+    {%endblock%}
+    {% block contenido %}
+    <div class="contain text-center">
+        <h1>Reportes de Entrada </h1>
+    </div>
+    <div class="m-4 d-flex justify-content-center align-items-center" >
+        <table class ="table table-striped">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>Id Reporte</th>
+                    <th>Fecha Entrada</th>
+                    <th>Unidad</th>
+                    <th>Zona</th>
+                    <th>KM Anterior</th>
+                    <th>KM Nuevo</th>
+                    <th>Descripción</th>
+                    <th>Estatus</th>
+                    <th>Entrada Por:</th>                    
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for reporte in reportes %}
+                <tr>
+                    <td>{{ reporte.id_entrada.id_reporte }}</td>
+                    <td>{{ reporte.id_entrada.fecha_entrada }}</td>
+                    <td>{{ reporte.id_entrada.unidad }}</td>
+                    <td>{{ reporte.id_entrada.unidad.zona_unidad }}</td>
+                    <td>{{ reporte.id_entrada.unidad.kilometraje }}</td>
+                    <td>{{ reporte.id_entrada.kilometraje_nuevo }}</td>
+                    <td><textarea >{{ reporte.id_entrada.descripcion_incidente }}</textarea></td>
+                    <td>{{ reporte.estatus }}</td>
+                    <td>{{ reporte.tipo_entrada }}</td>
+                    <!-- Botón para modificar el reporte -->
+                    <td><button class="btn btn-primary btn-sm" onclick="location.href='{% url 'crear_reporte_mecanico' reporte.id_reparacion %}'">Reporte de Reparaciones</button></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="12">No hay reportes disponibles.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+    {% endblock %}
+</body>

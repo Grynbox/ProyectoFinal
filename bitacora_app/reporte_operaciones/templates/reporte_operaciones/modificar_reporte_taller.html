@@ -1,0 +1,164 @@
+{%extends 'reporte_operaciones/base_template.html'%}
+{%block title%}Reporte {{reporte.id_reporte}}{%endblock%}
+<body>
+    {%block navbar %}         
+        <a class="nav-link active" aria-current="page" href="/home_taller/">Inicio</a>
+        <a class="nav-link active" aria-current="page" href="/home_dashboard/">Dashboard</a>
+        <a class="nav-link active" aria-current="page" href="/home_dashboard_dos/">Mecánicos</a>
+        <a class="nav-link">Usuario: {{usuario_logueado}}</a>
+        <a class="nav-link">Departamento: {{departamento_usuario}}</a>
+    {%endblock%}
+    {%block contenido%}
+    <div class="contain text-center">
+        <h1>Modificar Reporte</h1>
+    </div>
+        <div class="container" >
+            <div class="m-4 d-felx text-center">
+                <h6>Reporte de Entradas al Taller Número: {{reporte.id_reparacion}}</h6>
+            </div>
+            <div class="m-4 ">
+                <table class ="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id Reporte</th>
+                            <th>Fecha Entrada</th>
+                            <th>Unidad</th>
+                            <th>Zona</th>
+                            <th>KM Anterior</th>
+                            <th>KM Nuevo</th>
+                            <th>Descripción</th>
+                            <th>Estatus</th>
+                            <th>Entrada Por:</th>
+                            <th>Estación</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ reporte.id_entrada.id_reporte }}</td>
+                            <td>{{ reporte.id_entrada.fecha_entrada }}</td>
+                            <td>{{ reporte.id_entrada.unidad }}</td>
+                            <td>{{ reporte.id_entrada.unidad.zona_unidad }}</td>
+                            <td>{{ reporte.id_entrada.unidad.kilometraje }}</td>
+                            <td>{{ reporte.id_entrada.kilometraje_nuevo }}</td>
+                            <td><textarea maxlength="15">{{ reporte.id_entrada.descripcion_incidente }}</textarea></td>
+                            <td>{{ reporte.estatus }}</td>
+                            <td>{{ reporte.tipo_entrada }}</td>
+                            <td>{{ reporte.estacion }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <!--Formulario para cambiar Estatus y Tipo de Entrada al Taller-->
+        <div class="container ">
+            <div class="row">
+                <div class="col">
+                    <h6>Cambiar Estatus o Tipo Entrada</h6>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button class="btn btn-primary btn-sm" type="submit" name="guardar_cambios">Guardar Cambios</button>
+                    </form>
+                </div>
+                <!-- Asignar Mecanico -->
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h6>Asignar Mecánicos</h6>
+                            <form method="GET">
+                                {{ form_filtro.as_p }}
+                                <button class="btn btn-primary btn-sm" type="submit" name="filtrar">Filtrar</button>
+                            </form>
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ form_asignar.as_p }}
+                                <button class="btn btn-primary btn-sm" type="submit" name="asignar">Asignar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h6>Eliminar Asignacion Mecánicos</h6>
+                            <form method="GET">
+                                {{ form_filtro.as_p }}
+                                <button class="btn btn-primary btn-sm" type="submit" name="filtrar">Filtrar</button>
+                            </form>
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ form_asignar.as_p }}
+                                <button class="btn btn-danger btn-sm" type="submit" name="eliminar">Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <!-- Asignar estacion -->
+                    <h6>Asignar Estacion</h6>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form_estacion.as_p}}
+                        <button class="btn btn-primary btn-sm" type="submit" name="asignar_estacion">Asignar</button>
+                    </form>
+                    <!-- Eliminar estacion -->
+                    <h6>Eliminar Asignación de Estacion</h6>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form_estacion.as_p}}
+                        <button class="btn btn-danger btn-sm" type="submit" name="eliminar_estacion">Quitar Asignación</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                        {% endfor %}
+                    </ul>
+                    {% endif %} 
+                </div>
+            </div>
+        </div>
+        {%if mecanicos_asignados%}
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 col-sm-4">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;">Mecanicos Asignados</th>
+                                </tr>
+                                <tr>
+                                    <th>Especialidad</th>
+                                    <th>Mecanico</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for mecanico_asignado in mecanicos_asignados%}
+                                <tr>
+                                    <td>{{mecanico_asignado.mecanico.especialidad}}</td>
+                                    <td>{{mecanico_asignado.mecanico}}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="12">No hay reportes disponibles.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {%endif%}
+
+            
+
+    {%endblock%}
+    
+</body>
+</html>
